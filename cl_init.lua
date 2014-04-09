@@ -1,5 +1,5 @@
 include( 'shared.lua' )
---include( 'cl_hud.lua' )
+include( 'cl_polyHUD.lua' )
 
 function set_team() 	--Team picker Frame
 
@@ -49,7 +49,7 @@ function GM:PostDrawViewModel( vm, ply, weapon ) --- Draw Hands
 		local hands = LocalPlayer():GetHands()
 		if ( IsValid( hands ) ) then hands:DrawModel() end
 		
-	end
+	end xc
 
 end
 
@@ -61,18 +61,19 @@ local function draw_HUD()
 	if not client:Alive() then return end
 	if (client:GetActiveWeapon() == NULL or client:GetActiveWeapon() == "Camera" ) then return end
 			
-	local x = 20
-	local y = ScrH() - (ScrH() / 4.5)s
-	local w = ScrW() / 4.5
-	local h = ScrH() / 4.5
+	local scale = 5.5		--player settable
+	local x = 0
+	local y = ScrH() - (ScrH() / scale)
+	local w = ScrW() / scale
+	local h = ScrH() / scale
 			
 	draw.RoundedBoxEx( 16, x, y, w, h, Color( 0, 0, 0, 100 ), false, true, false, false) -- Hud box
-	draw.RoundedBox( 8, x + 30, y + 140, w * 0.85, h * 0.2, Color( 191, 191, 191, 130 ) )  -- Health bar
+	draw.RoundedBox( 8, x + ( w * 0.07), y + ( h * 0.58), w * 0.85, h * 0.15, Color( 191, 191, 191, 130 ) )  -- Health bar
 		
 	if client:Health() <= 92 then
 		draw.RoundedBoxEx( 8, x + 30, y + 140, w * 0.85 * (client:Health() / 100), h * 0.2, Color(255, 0, 0, 250 ), true, false, true, false)  --current health bar
 	else
-		draw.RoundedBox( 8, x + 30, y + 140, w * 0.85 * (client:Health() / 100), h * 0.2, Color(io255, 0, 0, 250 ))  --current health bar
+		draw.RoundedBox( 8, x + 30, y + 140, w * 0.85 * (client:Health() / 100), h * 0.2, Color(255, 0, 0, 250 ))  --current health bar
 	end
 		
 	draw.SimpleText( client:Health(), "DermaLarge", x + 50, y + 150, Color( 255, 255, 255, 255 ), TEXT_ALIGN_LEFT )
